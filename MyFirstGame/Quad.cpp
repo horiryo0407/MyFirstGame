@@ -86,7 +86,7 @@ HRESULT Quad::Initialize()
 
 	
 	pTexture_ = new Texture;
-	pTexture_->Load(L"Assets\\Manchester-City-FC-logo.png");
+	pTexture_->Load(L"Assets\\dice.png");
 	return S_OK;
 }
 
