@@ -12,6 +12,7 @@ SamplerState g_sampler : register(s0); //サンプラー
 cbuffer global
 {
     float4x4 matWVP; // ワールド・ビュー・プロジェクションの合成行列
+    float4x4 matUV;
 };
 
 //───────────────────────────────────────
@@ -35,7 +36,8 @@ VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NORMAL)
 	//ローカル座標に、ワールド・ビュー・プロジェクション行列をかけて
 	//スクリーン座標に変換し、ピクセルシェーダーへ
     outData.pos = mul(pos, matWVP);
-    outData.uv = uv;
+    outData.uv = mul(uv, matUV);
+    
     
     float4 light = float4(-1, 0.5, -0.7, 0);
     light = normalize(light);

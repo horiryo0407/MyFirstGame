@@ -7,6 +7,7 @@
 #include "Quad.h"
 #include "Texture.h"
 #include "Camera.h"
+#include "Dice.h"
 #include <d3d11.h>
 
 //リンカ
@@ -101,11 +102,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	ZeroMemory(&msg, sizeof(msg));
 
 	
-	Quad* q = new Quad();
-	q->Initialize();  // ← 初期化を忘れずに！
+	//Quad* q = new Quad();
+	//q->Initialize();  // ← 初期化を忘れずに！
 
 
-	
+	Dice* dice = new Dice();
+	dice->Initialize();
 
 	while (msg.message != WM_QUIT)
 	{
@@ -128,10 +130,20 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		Camera::Update();
 		Direct3D::BeginDraw();
 
-		
-		XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(45));
-		q->Draw(mat);
+		static float angleX = 0.0f;
+		static float angleY = 0.0f;
+		angleX += 0.05f;  // ゆっくり
+		angleY += 0.1f;
 
+		XMMATRIX worldRotation =
+			XMMatrixRotationX(XMConvertToRadians(angleX)) *
+			XMMatrixRotationY(XMConvertToRadians(angleY));
+		XMMATRIX uv = XMMatrixIdentity(); // 単位行列（回転なし）
+		dice->Draw(worldRotation,uv);
+		/*XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(0));
+		q->Draw(mat);
+          */
+      
 
 			//描画処理
 		Direct3D::EndDraw();
@@ -142,8 +154,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		
 	}
 	
-	q->Release();
-	SAFE_DELETE(q);
+	//q->Release();
+	//SAFE_DELETE(q);
+	dice->Release();
+	SAFE_DELETE(dice);
 	Direct3D::Release();
 	return (int) msg.wParam;
 }

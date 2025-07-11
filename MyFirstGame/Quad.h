@@ -3,7 +3,7 @@
 #include "Direct3D.h"
 #include "Texture.h"
 
-#include <DirectXMath.h>
+
 using namespace DirectX;
 
 //コンスタントバッファー
@@ -11,6 +11,7 @@ using namespace DirectX;
 struct CONSTANT_BUFFER
 {
 	XMMATRIX	matWVP;
+	XMMATRIX	matUV;
 };
 
 //頂点情報
@@ -28,10 +29,11 @@ class Quad
 	ID3D11Buffer* pConstantBuffer_;	//コンスタントバッファ
 
 	Texture* pTexture_;
+	ID3D11RasterizerState* pRasterState_;
 public:
 	Quad();
-	~Quad();
-	HRESULT Initialize();
-	void Draw(XMMATRIX& worldMatrix);
+	virtual ~Quad();
+	virtual HRESULT Initialize();
+	virtual void Draw(XMMATRIX& worldMatrix, XMMATRIX& uvMatrix);
 	void Release();
 };
