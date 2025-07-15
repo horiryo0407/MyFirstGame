@@ -33,9 +33,9 @@ void Dice::Draw(XMMATRIX& worldMatrix, XMMATRIX& uvMatrix)
 		XMMATRIX mat =
 			
 			XMMatrixRotationRollPitchYaw(
-				XMConvertToRadians(face.rotation.x),
-				XMConvertToRadians(face.rotation.y),
-				XMConvertToRadians(face.rotation.z)) *
+			XMConvertToRadians(face.rotation.x),
+			XMConvertToRadians(face.rotation.y),
+			XMConvertToRadians(face.rotation.z)) *
 			XMMatrixTranslation(face.position.x, face.position.y, face.position.z) *
 			worldMatrix;
 
